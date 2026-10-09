@@ -1,25 +1,81 @@
-<?php
-
-?>
-
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Conversor SVG para PNG</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conversor de Imagens</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-<div class = "container">
-    <input type="file" id = "svgFile" accept = ".svg"/>
-    <button id ="converterBtn">Converter</button>
-    <canvas id = "canvas" style="display: none;"></canvas>
-    <a id = "downloadLink" style="display: none;">Baixar PNG</a>
+<div class="wrap">
+  <header>
+    <h1>Conversor de Imagens</h1>
+    <p>Converta SVG, PNG, JPEG, WebP, AVIF, GIF, BMP, ICO, TIFF e HEIC. Tudo roda no seu navegador — nenhum arquivo é enviado para servidor.</p>
+  </header>
+
+  <div class="layout">
+    <aside class="panel">
+      <div class="field">
+        <span class="label">Converter para</span>
+        <div class="formats" id="formats"></div>
+        <p class="hint" id="fmtHint"></p>
+      </div>
+
+      <div class="field" id="qualityField">
+        <span class="label">Qualidade <span class="qval" id="qval">90%</span></span>
+        <input type="range" id="quality" min="10" max="100" value="90">
+      </div>
+
+      <div class="field">
+        <span class="label">Tamanho</span>
+        <div class="row">
+          <div><small>Largura (px)</small><input type="number" id="width" min="1" placeholder="auto"></div>
+          <div><small>Altura (px)</small><input type="number" id="height" min="1" placeholder="auto"></div>
+        </div>
+        <label class="check"><input type="checkbox" id="keep" checked> Manter proporção</label>
+        <div style="margin-top:10px">
+          <small style="font-size:12px;color:var(--muted)">Escala (%) — usada quando largura e altura estão vazias</small>
+          <input type="number" id="scale" min="1" max="2000" value="100">
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="label">Fundo</span>
+        <div class="formats seg" id="bgModes">
+          <label><input type="radio" name="bgmode" value="transparent" checked><span>Manter</span></label>
+          <label><input type="radio" name="bgmode" value="remove"><span>Remover</span></label>
+          <label><input type="radio" name="bgmode" value="color"><span>Cor</span></label>
+        </div>
+        <div class="sub" id="tolField">
+          <small>Tolerância <b id="tolVal">20%</b></small>
+          <input type="range" id="tolerance" min="0" max="100" value="20">
+        </div>
+        <div class="sub row" id="colorField">
+          <input type="color" id="bg" value="#ffffff">
+          <small style="margin:0">Cor do fundo</small>
+        </div>
+        <p class="hint" id="bgHint"></p>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="zipBtn" disabled>Baixar todas (.zip)</button>
+        <button id="clearBtn" disabled>Limpar lista</button>
+      </div>
+    </aside>
+
+    <main>
+      <label class="drop" id="drop" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <strong>Arraste imagens aqui ou clique para escolher</strong>
+        <p>Também dá para colar (Ctrl+V). Vários arquivos de uma vez.</p>
+        <input class="vh" type="file" id="file" multiple accept="image/*,.svg,.heic,.heif,.tif,.tiff,.ico,.bmp,.avif">
+      </label>
+      <div class="list" id="list"></div>
+      <p class="empty" id="empty">Nenhuma imagem ainda.</p>
+    </main>
+  </div>
 </div>
 
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
